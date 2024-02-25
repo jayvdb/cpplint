@@ -13,7 +13,7 @@ jobs:
       matrix:
         # Python 3.7 is the lowest available for actions/setup-python
         python-version: ['3.7', 'pypy3.10', '3.12']
-        os: [windows-latest]
+        os: [ubuntu-latest, windows-latest]
       fail-fast: false
 
     steps:
