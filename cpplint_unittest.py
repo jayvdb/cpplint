@@ -4984,7 +4984,11 @@ class CpplintTest(CpplintTestBase):
 
     temp_directory = os.path.realpath(tempfile.mkdtemp())
     temp_directory2 = os.path.realpath(tempfile.mkdtemp())
+
+    current_directory = os.getcwd()
     try:
+      os.chdir(temp_directory)
+
       os.makedirs(os.path.join(temp_directory, ".svn"))
       trunk_dir = os.path.join(temp_directory, "trunk")
       os.makedirs(trunk_dir)
@@ -5011,17 +5015,18 @@ class CpplintTest(CpplintTestBase):
                         cpplint.GetHeaderGuardCPPVariable(file_path))
 
       # ignore _repository if it exists but file isn't in it
-      cpplint._repository = temp_directory2
+      cpplint._repository = os.path.relpath(temp_directory2)
       self.assertEqual('TRUNK_CPPLINT_CPPLINT_TEST_HEADER_H_',
                         cpplint.GetHeaderGuardCPPVariable(file_path))
 
       # _root should be relative to _repository
-      cpplint._repository = trunk_dir
+      cpplint._repository = os.path.relpath(trunk_dir)
       cpplint._root = 'cpplint'
       self.assertEqual('CPPLINT_TEST_HEADER_H_',
                         cpplint.GetHeaderGuardCPPVariable(file_path))
 
     finally:
+      os.chdir(current_directory)
       shutil.rmtree(temp_directory)
       shutil.rmtree(temp_directory2)
       cpplint._repository = None
