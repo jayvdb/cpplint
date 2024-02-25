@@ -4977,7 +4977,7 @@ class CpplintTest(CpplintTestBase):
     # if platform.system() == 'Windows'
     from pathlib import Path
     root = Path(__file__).anchor
-    print("root of tests: {root}")
+    print(f"root of tests: {root}")
     print("TMPDIR: {}", os.getenv("TMPDIR"))
     print("TEMP: {}", os.getenv("TEMP"))
     print("TMP: {}", os.getenv("TMP"))
@@ -5011,12 +5011,12 @@ class CpplintTest(CpplintTestBase):
                         cpplint.GetHeaderGuardCPPVariable(file_path))
 
       # ignore _repository if it exists but file isn't in it
-      cpplint._repository = os.path.relpath(temp_directory2)
+      cpplint._repository = temp_directory2
       self.assertEqual('TRUNK_CPPLINT_CPPLINT_TEST_HEADER_H_',
                         cpplint.GetHeaderGuardCPPVariable(file_path))
 
       # _root should be relative to _repository
-      cpplint._repository = os.path.relpath(trunk_dir)
+      cpplint._repository = trunk_dir
       cpplint._root = 'cpplint'
       self.assertEqual('CPPLINT_TEST_HEADER_H_',
                         cpplint.GetHeaderGuardCPPVariable(file_path))
