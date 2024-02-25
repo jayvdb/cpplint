@@ -3267,7 +3267,6 @@ class CpplintTest(CpplintTestBase):
         error_collector.Results(),
         'Line contains NUL byte.  [readability/nul] [5]')
 
-    return
     # Make sure both NUL bytes and UTF-8 are caught if they appear on
     # the same line.
     error_collector = ErrorCollector(self.assertTrue)
