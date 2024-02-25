@@ -4973,9 +4973,15 @@ class CpplintTest(CpplintTestBase):
     self.assertEqual(['a', 'b', 'c', 'd'],
                       cpplint.PathSplitToList(os.path.join('a', 'b', 'c', 'd')))
 
-  @unittest.skipIf(platform.system() == 'Windows',
-                   'Skipping test on Windows because realpath can fail if mkdtemp uses D:')
   def testBuildHeaderGuardWithRepository(self):
+    # if platform.system() == 'Windows'
+    from pathlib import Path
+    root = Path(__file__).anchor
+    print("root of tests: {root}")
+    print("TMPDIR: {}", os.getenv("TMPDIR"))
+    print("TEMP: {}", os.getenv("TEMP"))
+    print("TMP: {}", os.getenv("TMP"))
+
     temp_directory = os.path.realpath(tempfile.mkdtemp())
     temp_directory2 = os.path.realpath(tempfile.mkdtemp())
     try:
